@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+	<script>
+		if(localStorage.visits)
+		{
+			localStorage.setItem("visits", Number(localStorage.getItem("visits")) + 1);
+		}
+		else
+		{
+			localStorage.setItem("visits", Number(1));
+		}
+	</script>
+
+	<script>
+		//Create an object an set each variable
+		//to be the name of each fighter.
+		//Asign each variable with an array that
+		//contains the necessary values for caluclating
+		//the stats.
+		var fightersAndShit = {
+			//Fighter Name: [ISVs(0-2), Growth Rates (3-5), BMVs(6-8), Name, Mastery]
+			Custom: [1, 1, 1, 1, 1, 1, 1, 1, 1, 'Custom', 'None'],
+			Custom2: [1, 1, 1, 1, 1, 1, 1, 1, 1, 'Custom', 'None'],
+			SimaYi: [32, 26, 30, 1.75, 1.4, 1.75, 8, 18, 11, 'Sima Yi', 'Fire'],
+			Toadmeister: [29, 37, 22, 1.65, 1.85, 1.45, 11, 9, 15, 'Toadmeister', 'Wind'],
+			Chrome: [33, 19, 36, 1.7, 1.3, 1.8, 13, 16, 8, 'Chrome', 'Earth'],
+			Merv: [30, 35, 20, 1.6, 1.9, 1.4, 11, 8, 20, 'Merv', 'Cursed Seal Jutsu'],
+			Freya: [24, 32, 32, 1.35, 1.75, 1.75, 19, 11, 8, 'Freya', 'Healing'],
+			EvilGuanYu: [33, 29, 26, 1.8, 1.7, 1.4, 8, 12, 17, 'Evil Guan Yu', 'Taijutsu'],
+			Jupiter: [35, 30, 23, 1.75, 1.75, 1.4, 8, 12, 18, 'Jupiter', 'Thunder'],
+			Llamar: [25, 35, 28, 1.45, 1.85, 1.65, 18, 8, 11, 'Llamar', 'Genjutsu'],
+			Muramasa: [34, 30, 26, 1.85, 1.65, 1.5, 9, 11, 16, 'Muramasa', 'Genjutsu'],
+			Void: [37, 21, 30, 1.85, 1.4, 1.65, 8, 17, 12, 'Void', 'Genjutsu'],
+			Altira: [30, 40, 20, 1.6, 1.9, 1.5, 11, 8, 21, 'Altira', 'Genjutsu'],
+			Shifter: [36, 27, 27, 1.9, 1.4, 1.7, 9, 16, 10, 'Shifter', 'Water'],
+			PirateDL: [27, 27, 36, 1.55, 1.55, 1.9, 14, 14, 8, 'Pirate D. L', 'Cursed Seal Jutsu'],
+			Fleshy: [38, 25, 25, 1.8, 1.45, 1.65, 8, 15, 13, 'Fleshy', 'Genjutsu'],
+			Wanderer: [30, 38, 23, 1.5, 1.9, 1.6, 17, 8, 12, 'Wanderer', 'Thunder'],
+			Shinigami: [32, 22, 36, 1.7, 1.4, 1.9, 12, 17, 8, 'Shinigami', 'Cursed Seal Jutsu'],
+			MetalX: [36, 25, 29, 1.8, 1.5, 1.7, 9, 15, 10, 'MetalX', 'Wind'],
+			Sif: [30, 26, 34, 1.65, 1.5, 1.85, 10, 17, 9, 'Sif', 'Taijutsu'],
+			Thor: [30, 35, 25, 1.5, 1.7, 1.8, 17, 12, 8, 'Thor', 'Thunder'],
+			ZhaoYun: [30, 38, 23, 1.6, 1.9, 1.5, 12, 8, 18, 'Zhao Yun', 'Thunder'],
+			Hel: [30, 34, 26, 1.65, 1.85, 1.5, 10, 9, 17, 'Hel', 'Fire'],
+			EvilIvbu: [36, 18, 36, 1.8, 1.4, 1.8, 9, 24, 9, 'Evil Ivbu', 'Fire'],
+			Stryker: [36, 22, 32, 1.9, 1.4, 1.7, 8, 18, 11, 'Stryker', 'Genjutsu'],
+			Susanoo: [22, 32, 36, 1.35, 1.8, 1.85, 17, 8, 11, 'Susanoo', 'Earth'],
+			Erza: [36, 25, 29, 1.8, 1.5, 1.7, 9, 14, 10, 'Erza', 'Genjutsu'],
+			Beauty: [18, 36, 36, 1.4, 1.8, 1.8, 24, 9, 9, 'Beauty', 'Water'],
+			Cloud: [33, 20, 37, 1.75, 1.2, 1.95, 11, 19, 8, 'Cloud', 'Healing'],
+			DeathKnight: [30, 35, 25, 1.6, 1.9, 1.5, 11, 9, 14, 'Death Knight', 'Water'],
+			Pumpkin: [30, 8, 23, 1.5, 1.9, 1.6, 17, 8, 12, 'Pumpkin', 'Genjutsu'],
+			Nami: [36, 30, 24, 1.9, 1.7, 1.4, 9, 10, 16, 'Nami', 'Thunder'],
+			Chopper: [36, 32, 26, 1.8, 1.75, 1.4, 9, 11, 17, 'Chopper', 'Thunder'],
+			IronMan: [32, 22, 36, 1.7, 1.4, 1.9, 11, 18, 8, 'Iron Man', 'Cursed Seal Jutsu'],
+			Kellyn: [35, 30, 23, 1.75, 1.75, 1.4, 8, 12, 18, 'Kellyn', 'Thunder'],
+			DevilHunter: [37, 21, 30, 1.85, 1.4, 1.65, 8, 17, 12, 'Devil Hunter', 'Genjutsu'],
+			Rugalz: [30, 38, 22, 1.6, 1.9, 1.5, 11, 8, 17, 'Rugalz', 'Thunder']
+			//Fuuuuuuuuucking DONE!!!!!
+		};
+
+		var toggleCustom1 = false;
+		var toggleCustom2 = false;
+
+		function updateCustoms() {
+			if(document.getElementById('Presets').value == 'Custom') {
+				if(!toggleCustom1) {
+					if(fightersAndShit.Custom[10] == 'None') {
+						document.getElementById('Custom').innerHTML = "<br><font size='5' style='text-decoration: underline'>Custom Fighter Stats</font><br><br>ISVs:<br><input  onchange='getValues2()' id='isv' name='isv' value='12, 10, 26'><br><br>Growth Rates:<br><input  onchange='getValues2()' id='gr' name='gr' value='0.6, 0.5, 1.27'><br><br>BMVs:<br><input  onchange='getValues2()' id='bmv' name='bmv' value='16, 19, 8'><br><br>";
+					} else {
+						var a = fightersAndShit.Custom;
+						document.getElementById('Custom').innerHTML = "<br><font size='5' style='text-decoration: underline'>Custom Fighter Stats</font><br><br>ISVs:<br><input  onchange='getValues2()' id='isv' name='isv' value='"+a[0]+", "+a[1]+", "+a[2]+"'><br><br>Growth Rates:<br><input  onchange='getValues2()' id='gr' name='gr' value='"+a[3]+", "+a[4]+", "+a[5]+"'><br><br>BMVs:<br><input  onchange='getValues2()' id='bmv' name='bmv' value='"+a[6]+", "+a[7]+", "+a[8]+"'><br><br>";
+					}
+					toggleCustom1 = true;
+				}
+			} else {
+				document.getElementById('Custom').innerHTML = "";
+				if(toggleCustom1) toggleCustom1 = false;
+			}
+
+			if(document.getElementById('Presets2').value == 'Custom2') {
+				if(!toggleCustom2) {
+					if(fightersAndShit.Custom2[10] == 'None') {
+						document.getElementById('Custom2').innerHTML = "<br><font size='5' style='text-decoration: underline'>Custom Fighter Stats</font><br><br>ISVs:<br><input  onchange='getValues2()' id='isv2' name='isv2' value='23, 4, 23'><br><br>Growth Rates:<br><input  onchange='getValues2()' id='gr2' name='gr2' value='1.15, 0.2, 1.15'><br><br>BMVs:<br><input  onchange='getValues2()' id='bmv2' name='bmv2' value='9, 121, 8'><br><br>";
+					} else {
+						var b = fightersAndShit.Custom2;
+						document.getElementById('Custom2').innerHTML = "<br><font size='5' style='text-decoration: underline'>Custom Fighter Stats</font><br><br>ISVs:<br><input  onchange='getValues2()' id='isv2' name='isv2' value='"+b[0]+", "+b[1]+", "+b[2]+"'><br><br>Growth Rates:<br><input  onchange='getValues2()' id='gr2' name='gr2' value='"+b[3]+", "+b[4]+", "+b[5]+"'><br><br>BMVs:<br><input  onchange='getValues2()' id='bmv2' name='bmv2' value='"+b[6]+", "+b[7]+", "+b[8]+"'><br><br>";
+					}
+					toggleCustom2 = true;
+				}
+			} else {
+				document.getElementById('Custom2').innerHTML = "";
+				if(toggleCustom2) toggleCustom2 = false;
+			}
+		}
+
+		//Function called for when it's time to swap fighters 
+		function getValues2() {
+			//Check for custom fighters
+			updateCustoms();
+
+			//Need to obtain info from element
+			var fighterValue = document.getElementById('Presets').value;
+			var levelValue = document.getElementById('level').value;
+			var levelResult = levelValue;
+			var fighterValue2 = document.getElementById('Presets2').value;
+			var levelValue2 = document.getElementById('level2').value;
+			var levelResult2 = levelValue2;
+
+			if(fighterValue == "Custom") {
+				var isvs = document.getElementById('isv').value.split(/\s*,\s*/).filter(function(value) { return !!value; });
+				var grs = document.getElementById('gr').value.split(/\s*,\s*/).filter(function(value) { return !!value; });
+				var bmvs = document.getElementById('bmv').value.split(/\s*,\s*/).filter(function(value) { return !!value; });
+
+				fightersAndShit["Custom"] = [Number(isvs[0]),Number(isvs[1]),Number(isvs[2]),Number(grs[0]),Number(grs[1]),Number(grs[2]),Number(bmvs[0]),Number(bmvs[1]),Number(bmvs[2]),"Custom","???"];
+			}
+
+			if(fighterValue2 == "Custom2") {
+				var isvs = document.getElementById('isv2').value.split(/\s*,\s*/).filter(function(value) { return !!value; });
+				var grs = document.getElementById('gr2').value.split(/\s*,\s*/).filter(function(value) { return !!value; });
+				var bmvs = document.getElementById('bmv2').value.split(/\s*,\s*/).filter(function(value) { return !!value; });
+
+				fightersAndShit["Custom2"] = [Number(isvs[0]),Number(isvs[1]),Number(isvs[2]),Number(grs[0]),Number(grs[1]),Number(grs[2]),Number(bmvs[0]),Number(bmvs[1]),Number(bmvs[2]),"Custom","???"];
+			}
+
+			var currentSTR = document.getElementById('current_str').value;
+			var currentDEX = document.getElementById('current_dex').value;
+			var currentSTA = document.getElementById('current_sta').value;
+			var baseMIN = document.getElementById('base_min').value;
+			var baseMAX = document.getElementById('base_max').value;
+			var baseHP = document.getElementById('base_hp').value;
+
+			//Create variables for each necessary value:
+			var stats = fightersAndShit[fighterValue];
+			var stats2 = fightersAndShit[fighterValue2];
+
+			//Calculate the stats
+			//Formula is: [GR * (Lvl * 8)] + ISV
+			var str, dex, sta, str2, dex2, sta2;
+			var baseSTR, baseDEX, baseSTA, newSTR, newDEX, newSTA;
+			var oldStats = [];
+			var newStats = [];
+			var completeStats = [];
+			var completeStats2 = [];
+			var completeDifference = [];
+
+			str = Math.ceil((stats[3] * (levelValue * 8)) + stats[0]);
+			dex = Math.ceil((stats[4] * (levelValue * 8)) + stats[1]);
+			sta = Math.ceil((stats[5] * (levelValue * 8)) + stats[2]);
+			str2 = Math.ceil((stats2[3] * (levelValue2 * 8)) + stats2[0]);
+			dex2 = Math.ceil((stats2[4] * (levelValue2 * 8)) + stats2[1]);
+			sta2 = Math.ceil((stats2[5] * (levelValue2 * 8)) + stats2[2]);
+
+			//Find potential STR, DEX, STA
+			baseSTR = currentSTR - str;
+			baseDEX = currentDEX - dex;
+			baseSTA = currentSTA - sta;
+			newSTR = baseSTR + str2;
+			newDEX = baseDEX + dex2;
+			newSTA = baseSTA + sta2;
+
+			completeStats[0] = Math.floor(currentSTR / stats[6]);
+			completeStats[1] = Math.floor(currentDEX / stats[7]);
+			completeStats[2] = Math.floor(currentSTA / stats[8]);
+
+			completeStats2[0] = Math.floor(newSTR / stats2[6]);
+			completeStats2[1] = Math.floor(newDEX / stats2[7]);
+			completeStats2[2] = Math.floor(newSTA / stats2[8]);
+
+			//Stupid error :<
+			completeDifference[0] = completeStats2[0] - completeStats[0];
+			completeDifference[1] = completeStats2[1] - completeStats[1];
+			completeDifference[2] = completeStats2[2] - completeStats[2];
+
+			for(var i = 0; i < completeDifference.length; i++) {
+				if(completeDifference[i] >= 0) completeDifference[i] = "+" + completeDifference[i];
+			}
+
+			//Old Stat Calcs
+			//atk
+			oldStats[0] = Math.floor(str / stats[6]);
+			//spd & eva
+			oldStats[1] = Math.floor(dex / stats[7]);
+			//hp & sp
+			oldStats[2] = Math.floor(sta / stats[8]);
+
+			//New Stat Calcs
+			//atk
+			newStats[0] = Math.floor(str2 / stats2[6]);
+			//spd & eva
+			newStats[1] = Math.floor(dex2 / stats2[7]);
+			//hp & sp
+			newStats[2] = Math.floor(sta2 / stats2[8]);
+
+			levelResult = (levelResult == 'invalid') ? 'Invalid Level' : 'Level: +' + levelResult;
+			levelResult2 = (levelResult2 == 'invalid') ? 'Invalid Level' : 'Level: +' + levelResult2;
+
+			document.getElementById('Results').style = "background-color:white;";
+			document.getElementById('Results2').style = "background-color:white;";
+
+			var finalResult = "<br><font size='5' style='text-decoration: underline'>Current Fighter Results:</font><br><br>" + stats[9] + "<br>Mastery: " + stats[10] + "<br>BMVs: " + stats[6] + "/" + stats[7] + "/" + stats[8] + "<br><br>" + levelResult + "<br><br>" + str + " STR<br>(+" + oldStats[0] + " ATK%)<br><br>" + dex + " DEX<br>(+" + oldStats[1] + " SPD/EVA)<br><br>" + sta + " STA<br>(+" + oldStats[2] + " HP%/SP%)<br><br>";
+			var finalResult2 = "<br><font size='5' style='text-decoration: underline'>New Fighter Results:</font><br><br>" + stats2[9] + "<br>Mastery: " + stats2[10] + "<br>BMVs: " + stats2[6] + "/" + stats2[7] + "/" + stats2[8] + "<br><br>" + levelResult2 + "<br><br>" + str2 + " STR<br>(+" + newStats[0] + " ATK%)<br><br>" + dex2 + " DEX<br>(+" + newStats[1] + " SPD/EVA)<br><br>" + sta2 + " STA<br>(+" + newStats[2] + " HP%/SP%)<br><br>";
+
+			if(fighterValue == "Custom") {
+				finalResult = "<br><font size='5' style='text-decoration: underline'>Current Fighter Results:</font><br><br>ISVs: " + stats[0] + "/" + stats[1] + "/" + stats[2] + "<br>Growth Rates: " + stats[3] + "/" + stats[4] + "/" + stats[5] + "<br>BMVs: " + stats[6] + "/" + stats[7] + "/" + stats[8] + "<br><br>" + levelResult + "<br><br>" + str + " STR<br>(+" + oldStats[0] + " ATK%)<br><br>" + dex + " DEX<br>(+" + oldStats[1] + " SPD/EVA)<br><br>" + sta + " STA<br>(+" + oldStats[2] + " HP%/SP%)<br><br>";
+			}
+
+			if(fighterValue2 == "Custom2") {
+				finalResult2 = "<br><font size='5' style='text-decoration: underline'>New Fighter Results:</font><br><br>ISVs: " + stats2[0] + "/" + stats2[1] + "/" + stats2[2] + "<br>Growth Rates: " + stats2[3] + "/" + stats2[4] + "/" + stats2[5] + "<br>BMVs: " + stats2[6] + "/" + stats2[7] + "/" + stats2[8] + "<br><br>" + levelResult2 + "<br><br>" + str2 + " STR<br>(+" + newStats[0] + " ATK%)<br><br>" + dex2 + " DEX<br>(+" + newStats[1] + " SPD/EVA)<br><br>" + sta2 + " STA<br>(+" + newStats[2] + " HP%/SP%)<br><br>";
+			}
+
+			var finalResult3;
+			if(baseMIN.length > 0 || baseMAX.length > 0 || baseHP.length > 0) {
+				finalResult3 = "<br><font size='5' style='text-decoration: underline'>Fighter Change Stat Gains:</font><br><br>";
+				if(baseMIN.length > 0 && baseMAX.length > 0) {
+					var min = (Number(baseMIN) * (completeDifference[0] / 100)).toFixed(2);
+					var max = (Number(baseMAX) * (completeDifference[0] / 100)).toFixed(2);
+					if(min >= 0) min = "+" + min;
+					if(max >= 0) max = "+" + min;
+					finalResult3 += completeDifference[0] + " ATK%<br>(" + min + " MIN ATK)<br>(" + max + " MAX ATK)<br><br>";
+				} else {
+					finalResult3 += completeDifference[0] + " ATK%<br><br>"
+				}
+
+				finalResult3 += completeDifference[1] + " SPD/EVA<br><br>";
+
+				if(baseHP.length > 0) {
+					var hp = (Number(baseHP) * (completeDifference[0] / 100)).toFixed(2);
+					if(hp >= 0) hp = "+" + hp;
+					finalResult3 += completeDifference[2] + " HP%/SP%<br>(" + hp + " HP)<br><br>";
+				} else {
+					finalResult3 += completeDifference[2] + " HP%/SP%<br><br>"
+				}
+			} else {
+				finalResult3 = "<br><font size='5' style='text-decoration: underline'>Fighter Change Stat Gains:</font><br><br>" + completeDifference[0] + " ATK%<br><br>" + completeDifference[1] + " SPD/EVA<br><br>" + completeDifference[2] + " HP%/SP%<br><br>";
+			}
+			
+
+			if(levelValue == 666 || levelValue2 == 666) {
+				finalResult = "<br><font size='5' style='text-decoration: underline'>Current Fighter Results:</font><br><br> Screw you Illuminati!!!<br><br>";
+				finalResult2 = "<br><font size='5' style='text-decoration: underline'>New Fighter Results:</font><br><br> Get outta here!<br><br>";
+				finalResult3 = "<br><font size='5' style='text-decoration: underline'>Fighter Change Stat Gains:</font><br><br> Why you harass meh?<br><br>";
+			} else if(levelValue == 420 || levelValue2 == 420) {
+				finalResult = "<br><font size='5' style='text-decoration: underline'>Current Fighter Results:</font><br><br> 420 spelled backwards is 24.<br><br>";
+				finalResult2 = "<br><font size='5' style='text-decoration: underline'>New Fighter Results:</font><br><br> Has no other significance.<br><br>";
+				finalResult3 = "<br><font size='5' style='text-decoration: underline'>Fighter Change Stat Gains:</font><br><br> I promise.<br><br>"
+			}
+
+			document.getElementById('Results').innerHTML = finalResult;
+			document.getElementById('Results2').innerHTML = finalResult2;
+			document.getElementById('Results3').innerHTML = finalResult3;
+		}
+
+		//Makes the second level input value
+		//match the first one!
+		function matchLevels() {
+			document.getElementById('level2').value = document.getElementById('level').value;
+		}
+	</script>
+
+	<head>
+		<title>XF Fighter Calculator</title>
+		<link rel="stylesheet" href="desktop.css" media="screen" />
+		<link rel="stylesheet" href="mobile.css" media="only screen and (max-device width:480px)"/>
+		<meta name="viewport" content="width=320,user-scalable=false" />
+	</head>
+
+	<body>
+
+		<p>
+			<img src="XFLogo.png" alt="X-Fighting Logo" width=218px height=auto>
+		</p>
+
+		<p>
+			<img src="SumRndmDdeLogo3.png" alt="SumRndmDde" width = 400px height = auto>
+		</p>
+
+		<h1>X-Fighting<br>Fighter Calculator</h1>
+		<h1>Version: 1.00</h1>
+		<p style="background-color:white;">
+			<br>
+			Hello!
+			<br>
+			Welcome to an X-Fighting calculator!
+			<br>
+			<br>
+			The following calculator will give the stats a certain
+			fighter will wield at a certain level and see what
+			their affects would be on your direct stats.
+			<br>
+			<br>
+			You can also use it to compare the stat changes that will
+			occur from switching from one legendary to another, or compare
+			and contrast the benefits of current legendaries.
+			<br>
+			<br>
+			Please enjoy!
+			<br>
+			<br>
+			- <a href="http://line.me/ti/p/WYKiDc_5lQ">SumRndmDde (Robert)</a>
+			<br>
+			<br>
+			<br>
+			Wanna Support Me?<br>
+			Buy my LINE Sticker Pack!<br>
+			<a href="http://line.me/S/sticker/1251518">Random Face Dude Stickers</a><br>
+			<br>
+			Looking for Chaos Fighters Version?<br>
+			<a href="http://SumRndmDde.github.io/CF-Fighter-Calculator">Chaos Fighters Fighter Calculator</a><br>
+			<br>
+			Wanna Watch this Calculator get Created?<br>
+			<a href="https://www.youtube.com/playlist?list=PLD7ITaezNPY3Nu-zwPb_5g0HHb8IONeQt">Creation of the Fighter Calc</a><br>
+			<br>
+		</p>
+
+		<p>
+			<img src="SumRndmDdeLogo3.png" alt="SumRndmDde" width = 400px height = auto>
+		</p>
+
+		<p style="background-color:#D692FF;">
+			<br>
+			<font size="5" style="text-decoration: underline">Current Fighter Info:</font>
+			<br>
+			<br>
+			Fighter:
+			<br>
+			<select id="Presets" onchange='getValues2()'>
+				<option value="Custom">Custom Fighter</option>
+				<option value="SimaYi" selected>Sima Yi</option>
+				<option value="Freya">Freya</option>
+				<option value="Chrome">Chrome</option>
+				<option value="Toadmeister">Toadmeister</option>
+				<option value="MetalX">Wolverine</option>
+				<option value="EvilGuanYu">Evil Guan Yu</option>
+				<option value="Thor">Thor</option>
+				<option value="Altira">Shabel</option>
+				<option value="Rugalz">Rugalz</option>
+				<option value="DevilHunter">Devil Hunter</option>
+				<option value="Llamar">Llamar</option>
+				<option value="Kellyn">Kellyn</option>
+				<option value="Shinigami">Ichigo</option>
+				<option value="Fleshy">Fleshy</option>
+				<option value="IronMan">Iron Man</option>
+				<option value="Chopper">Chopper</option>
+				<option value="Cloud">Cloud</option>
+				<option value="Nami">Nami</option>
+				<option value="ZhaoYun">Zhao Yun</option>
+				<option value="Pumpkin">Pumpkin</option>
+				<option value="EvilIvbu">Evil Ivbu</option>
+				<option value="DeathKnight">Death Knight</option>
+				<option value="PirateDL">Pirate D. L</option>
+				<option value="Shifter">Shifter</option>
+				<option value="Sif">Sif</option>
+				<option value="Hel">Hel</option>
+				<option value="Merv">Merv</option>
+				<option value="Wanderer">Wanderer</option>
+				<option value="Erza">Erza</option>
+				<option value="Beauty">Beauty</option>
+				<option value="Muramasa">Ross</option>
+				<option value="Custom">== Chaos Fighters ==</option>
+				<option value="Jupiter">Jupiter</option>
+				<option value="Void">Void</option>
+				<option value="Stryker">Stryker</option>
+				<option value="Susanoo">Susanoo</option>
+			</select>
+			<br>
+			<br>
+			Fighter's Level (0-34):
+			<br>
+			<input type="tel" onchange="getValues2()" id="level" name="level" value="27"><br>
+			<br>
+		</p>
+
+		<p id="Custom" style="background-color:#D692FF;">
+		</p>
+
+		<p id="Results" style="background-color:white;">
+		</p>
+
+		<p style="background-color:#92C5FF;">
+			<br>
+			<font size="5" style="text-decoration: underline">New Fighter Info:</font>
+			<br>
+			<br>
+			Fighter:
+			<br>
+			<select id="Presets2" onchange='getValues2()'>
+				<option value="Custom2">Custom Fighter</option>
+				<option value="SimaYi">Sima Yi</option>
+				<option value="Freya" selected>Freya</option>
+				<option value="Chrome">Chrome</option>
+				<option value="Toadmeister">Toadmeister</option>
+				<option value="MetalX">Wolverine</option>
+				<option value="EvilGuanYu">Evil Guan Yu</option>
+				<option value="Thor">Thor</option>
+				<option value="Altira">Shabel</option>
+				<option value="Rugalz">Rugalz</option>
+				<option value="DevilHunter">Devil Hunter</option>
+				<option value="Llamar">Llamar</option>
+				<option value="Kellyn">Kellyn</option>
+				<option value="Shinigami">Ichigo</option>
+				<option value="Fleshy">Fleshy</option>
+				<option value="IronMan">Iron Man</option>
+				<option value="Chopper">Chopper</option>
+				<option value="Cloud">Cloud</option>
+				<option value="Nami">Nami</option>
+				<option value="ZhaoYun">Zhao Yun</option>
+				<option value="Pumpkin">Pumpkin</option>
+				<option value="EvilIvbu">Evil Ivbu</option>
+				<option value="DeathKnight">Death Knight</option>
+				<option value="PirateDL">Pirate D. L</option>
+				<option value="Shifter">Shifter</option>
+				<option value="Sif">Sif</option>
+				<option value="Hel">Hel</option>
+				<option value="Merv">Merv</option>
+				<option value="Wanderer">Wanderer</option>
+				<option value="Erza">Erza</option>
+				<option value="Beauty">Beauty</option>
+				<option value="Muramasa">Ross</option>
+				<option value="Custom2">== Chaos Fighters ==</option>
+				<option value="Jupiter">Jupiter</option>
+				<option value="Void">Void</option>
+				<option value="Stryker">Stryker</option>
+				<option value="Susanoo">Susanoo</option>
+			</select>
+			<br>
+			<br>
+			New Fighter's Level (0-34):
+			<br>
+			<input type="tel" onchange="getValues2()" id="level2" name="level2" value="27"><br>
+			<br>
+			<button type="button" onclick="matchLevels()">Match Current Level</button>
+			<br>
+			<br>
+		</p>
+
+		<p id="Custom2" style="background-color:#92C5FF;">
+		</p>
+
+		<p id="Results2" style="background-color:white;">
+		</p>
+
+		<p style="background-color:#EEFF92;">
+			<br>
+			<font size="5" style="text-decoration: underline">Current Stats:</font>
+			<br>
+			<br>
+			STR:
+			<br>
+			<input type="tel" onchange="getValues2()" id="current_str" name="current_str" value="1000"><br>
+			<br>
+			DEX:
+			<br>
+			<input type="tel" onchange="getValues2()" id="current_dex" name="current_dex" value="1000"><br>
+			<br>
+			STA:
+			<br>
+			<input type="tel" onchange="getValues2()" id="current_sta" name="current_sta" value="1000"><br>
+			<br>
+			Base MIN ATK (Optional):
+			<br>
+			<input type="tel" onchange="getValues2()" id="base_min" name="base_min" value=""><br>
+			<br>
+			Base MAX ATK (Optional):
+			<br>
+			<input type="tel" onchange="getValues2()" id="base_max" name="base_max" value=""><br>
+			<br>
+			Base HP (Optional):
+			<br>
+			<input type="tel" onchange="getValues2()" id="base_hp" name="base_hp" value=""><br>
+			<br>
+			<br>
+			Input Base ATK and/or Base HP to get exactly how much ATK/HP will be gained/lost.<br>
+			Unsure what your Base ATK or Base HP is? 
+			Use the <a href='http://SumRndmDde.github.io/Base-Percent'>Base and Percent Calculator</a> to find out!
+			<br>
+			<br>
+		</p>
+
+		<p id="Results3" style="background-color:white;">
+			<script>
+				getValues2();
+			</script>
+		</p>
+		<br>
+		<p>
+			<img src="SumRndmDdeLogo3.png" alt="SumRndmDde" width = 400px height = auto>
+		</p>
+		<br>
+		<br>
+		<p style="font-family:terminal;background-color:#6BFF98;">
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version 1.00]</font><br>
+			Official Release Version<br>
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version Beta 1.42]</font><br>
+			Chaos Fighters Fighters added<br>
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version Beta 1.41]</font><br>
+			Made Custom Fighters get saved<br>
+			Changed Custom defaults to Ainu and Jessi<br>
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version Beta 1.40]</font><br>
+			Added Custom Fighters<br>
+			Will still get complaints about lack of Jessi though T-T<br>
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version Beta 1.31]</font><br>
+			Seperated Base ATK into MIN and MAX<br>
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version Beta 1.30]</font><br>
+			Added input for Base stats<br>
+			Added ability to view direct stats<br>
+			Made Toadmeister default<br>
+			Linked to playlist<br>
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version Beta 1.21]</font><br>
+			Added plus sign to positive changes<br>
+			Added link to Base/Percent Calculator<br>
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version Beta 1.20]</font><br>
+			Added button to copy previous level<br>
+			Added link to video :p<br>
+			Fixed error which gave reverse results<br>
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version Beta 1.10]</font><br>
+			Added the ability to view multiple fighters<br>
+			Can now compare stats<br>
+			Can now see what stat gains will occur when switching<br>
+			Fixed TAB label<br>
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version Beta 1.01]</font><br>
+			Data Loads Automatically<br>
+ 			Freya Fixed<br>
+ 			+0 and +34 Fixed<br>
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version Beta 1.00]</font><br>
+ 			Calculator Created!<br>
+ 			<br>
+		</p>
+
+		<p>
+			<br>
+			<br>
+			<br>
+			Found an error?<br>
+			Wish to request something?<br>
+			My LINE ID is 'SumRndmDde'<br>
+		</p>
+		
+	</body>
+</html>
