@@ -130,6 +130,13 @@
 			var baseMAX = document.getElementById('base_max').value;
 			var baseHP = document.getElementById('base_hp').value;
 
+			var Estr = Number(document.getElementById('estr').value);
+			var Edex = Number(document.getElementById('edex').value);
+			var Esta = Number(document.getElementById('esta').value);
+			var Estr2 = Number(document.getElementById('estr2').value);
+			var Edex2 = Number(document.getElementById('edex2').value);
+			var Esta2 = Number(document.getElementById('esta2').value);
+
 			//Create variables for each necessary value:
 			var stats = fightersAndShit[fighterValue];
 			var stats2 = fightersAndShit[fighterValue2];
@@ -144,12 +151,12 @@
 			var completeStats2 = [];
 			var completeDifference = [];
 
-			str = Math.ceil((stats[3] * (levelValue * 8)) + stats[0]);
-			dex = Math.ceil((stats[4] * (levelValue * 8)) + stats[1]);
-			sta = Math.ceil((stats[5] * (levelValue * 8)) + stats[2]);
-			str2 = Math.ceil((stats2[3] * (levelValue2 * 8)) + stats2[0]);
-			dex2 = Math.ceil((stats2[4] * (levelValue2 * 8)) + stats2[1]);
-			sta2 = Math.ceil((stats2[5] * (levelValue2 * 8)) + stats2[2]);
+			str = Math.ceil((stats[3] * (levelValue * 8)) + stats[0]) + Estr;
+			dex = Math.ceil((stats[4] * (levelValue * 8)) + stats[1]) + Edex;
+			sta = Math.ceil((stats[5] * (levelValue * 8)) + stats[2]) + Esta;
+			str2 = Math.ceil((stats2[3] * (levelValue2 * 8)) + stats2[0]) + Estr2;
+			dex2 = Math.ceil((stats2[4] * (levelValue2 * 8)) + stats2[1]) + Edex2;
+			sta2 = Math.ceil((stats2[5] * (levelValue2 * 8)) + stats2[2]) + Esta2;
 
 			//Find potential STR, DEX, STA
 			baseSTR = currentSTR - str;
@@ -216,7 +223,7 @@
 					var min = (Number(baseMIN) * (completeDifference[0] / 100)).toFixed(2);
 					var max = (Number(baseMAX) * (completeDifference[0] / 100)).toFixed(2);
 					if(min >= 0) min = "+" + min;
-					if(max >= 0) max = "+" + min;
+					if(max >= 0) max = "+" + max;
 					finalResult3 += completeDifference[0] + " ATK%<br>(" + min + " MIN ATK)<br>(" + max + " MAX ATK)<br><br>";
 				} else {
 					finalResult3 += completeDifference[0] + " ATK%<br><br>"
@@ -225,7 +232,7 @@
 				finalResult3 += completeDifference[1] + " SPD/EVA<br><br>";
 
 				if(baseHP.length > 0) {
-					var hp = (Number(baseHP) * (completeDifference[0] / 100)).toFixed(2);
+					var hp = (Number(baseHP) * (completeDifference[2] / 100)).toFixed(2);
 					if(hp >= 0) hp = "+" + hp;
 					finalResult3 += completeDifference[2] + " HP%/SP%<br>(" + hp + " HP)<br><br>";
 				} else {
@@ -255,6 +262,14 @@
 		//match the first one!
 		function matchLevels() {
 			document.getElementById('level2').value = document.getElementById('level').value;
+			getValues2();
+		}
+
+		function matchEStats() {
+			document.getElementById('estr2').value = document.getElementById('estr').value;
+			document.getElementById('edex2').value = document.getElementById('edex').value;
+			document.getElementById('esta2').value = document.getElementById('esta').value;
+			getValues2();
 		}
 	</script>
 
@@ -276,12 +291,12 @@
 		</p>
 
 		<h1>X-Fighting<br>Fighter Calculator</h1>
-		<h1>Version: 1.00</h1>
+		<h1>Version: 1.10</h1>
 		<p style="background-color:white;">
 			<br>
 			Hello!
 			<br>
-			Welcome to an X-Fighting calculator!
+			Welcome to a X-Fighting calculator!
 			<br>
 			<br>
 			The following calculator will give the stats a certain
@@ -367,7 +382,18 @@
 			<br>
 			Fighter's Level (0-34):
 			<br>
+			(Set to 34 for E-Fighter)
+			<br>
 			<input type="tel" onchange="getValues2()" id="level" name="level" value="27"><br>
+			<br>
+			<br>
+			E-Fighter Stats:
+			<br>
+			STR: <input type="tel" onchange="getValues2()" id="estr" name="estr" value="0"><br>
+			<br>
+			DEX: <input type="tel" onchange="getValues2()" id="edex" name="edex" value="0"><br>
+			<br>
+			STA: <input type="tel" onchange="getValues2()" id="esta" name="esta" value="0"><br>
 			<br>
 		</p>
 
@@ -385,9 +411,9 @@
 			Fighter:
 			<br>
 			<select id="Presets2" onchange='getValues2()'>
-				<option value="Custom2">Custom Fighter</option>
-				<option value="SimaYi">Sima Yi</option>
-				<option value="Freya" selected>Freya</option>
+				<option value="Custom">Custom Fighter</option>
+				<option value="SimaYi" selected>Sima Yi</option>
+				<option value="Freya">Freya</option>
 				<option value="Chrome">Chrome</option>
 				<option value="Toadmeister">Toadmeister</option>
 				<option value="MetalX">Wolverine</option>
@@ -417,7 +443,7 @@
 				<option value="Erza">Erza</option>
 				<option value="Beauty">Beauty</option>
 				<option value="Muramasa">Ross</option>
-				<option value="Custom2">== Chaos Fighters ==</option>
+				<option value="Custom">== Chaos Fighters ==</option>
 				<option value="Jupiter">Jupiter</option>
 				<option value="Void">Void</option>
 				<option value="Stryker">Stryker</option>
@@ -427,9 +453,23 @@
 			<br>
 			New Fighter's Level (0-34):
 			<br>
+			(Set to 34 for E-Fighter)
+			<br>
 			<input type="tel" onchange="getValues2()" id="level2" name="level2" value="27"><br>
 			<br>
 			<button type="button" onclick="matchLevels()">Match Current Level</button>
+			<br>
+			<br>
+			<br>
+			E-Fighter Stats:
+			<br>
+			STR: <input type="tel" onchange="getValues2()" id="estr2" name="estr2" value="0"><br>
+			<br>
+			DEX: <input type="tel" onchange="getValues2()" id="edex2" name="edex2" value="0"><br>
+			<br>
+			STA: <input type="tel" onchange="getValues2()" id="esta2" name="esta2" value="0"><br>
+			<br>
+			<button type="button" onclick="matchEStats()">Match E-Fighter Stats</button>
 			<br>
 			<br>
 		</p>
@@ -489,6 +529,13 @@
 		<br>
 		<br>
 		<p style="font-family:terminal;background-color:#6BFF98;">
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version 1.10]</font><br>
+			Added more E-Fighter compatibility<br>
+			Fixed Base HP issue<br>
+			<br>
+			<font size="3" style='text-decoration: underline'>[Version 1.01]</font><br>
+			Fixed error with Base Max<br>
 			<br>
 			<font size="3" style='text-decoration: underline'>[Version 1.00]</font><br>
 			Official Release Version<br>
